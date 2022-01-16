@@ -15,8 +15,8 @@
        npm install --save @emotion/react
   6.2) styled-components
        npm install --save styled-components   
-7) доавим папку 
-  7.1) .prettierrc.json   
+7) добавим папку 
+  7.1) .prettierrc.json 
         {
           "printWidth": 80,
           "tabWidth": 2,
@@ -39,3 +39,5 @@
                     "src"
                 ]
             }
+8) Deployment:
+   https://create-react-app.dev/docs/deployment
