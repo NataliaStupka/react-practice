@@ -41,3 +41,6 @@
             }
 8) Deployment:
    https://create-react-app.dev/docs/deployment#github-pages
+   
+   "homepage": "https://myusername.github.io/my-app",
+    npm install --save gh-pages
