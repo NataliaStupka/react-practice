@@ -39,8 +39,18 @@
                     "src"
                 ]
             }
+            
+ + добовляем компонетны           
+            
 8) Deployment:
    https://create-react-app.dev/docs/deployment#github-pages
    
    "homepage": "https://myusername.github.io/my-app",
     npm install --save gh-pages
+    
+    8.2) в "scripts": добавляем "predeploy": "npm run build",
+   "deploy": "gh-pages -d build", 8.4) npm run deploy
+    
+    
+    8.!. если выскакивает ошибка
+npm i -D --save-exact mini-css-extract-plugin@2.4.5 
