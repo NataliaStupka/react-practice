@@ -74,6 +74,8 @@ class Counter extends React.Component {
         }
 
     render() {
+// можно деструктуризировать this.state
+
         return (
             <div className='Counter'>
                 {/* перенесем спасн в отдельный файл Value */}

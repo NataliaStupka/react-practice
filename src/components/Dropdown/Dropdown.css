@@ -1,16 +1,17 @@
 .Dropdown {
   position: relative;
-  width: 400px;
+  width: 380px;
   padding: 20px;
   border: 1px solid black;
+  margin: 50px;
 }
 
 .Dropdown__menu {
   position: absolute;
   top: 100%;
   left: 0;
-  width: 100%;
-  padding: 20px;
+  width: 95%;
+  padding: 10px;
   text-align: center;
   background-color: teal;
   color: white;
