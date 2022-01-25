@@ -4,6 +4,12 @@
 - выпадающее меню
 - Color Picker
 - Заметки (начало, 1)
+- Формы
+
+ФИКСИМ ошибку: при npm start выдает ошибку "This is probably not a problem with
+npm. There is likely additional logging output above"; Поможет: 1)npm config set
+unsafe-perm true; 2) npm cache clean --force; 3) npm install; После этого npm
+start открывает страницу в браузере
 
 <!-- ---------------- -->
 
