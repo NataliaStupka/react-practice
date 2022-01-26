@@ -34,6 +34,11 @@ class App extends Component {
     }));
   };
 
+  // 4.6) получаем доступ в App к form на момент сабмита(через пропсы, значение state, перекинем name и tag)
+  formSubmitHandler = data => {
+    console.log(data);
+  };
+
   render() {
     const { todos } = this.state;
 
@@ -67,7 +72,8 @@ class App extends Component {
           <button type='submit'>Отправить</button>
         </form> */}
 
-        <Form />
+        {/* 4/6) сдесь onSubmit это название пропса */}
+        <Form onSubmit={this.formSubmitHandler} />
 
         <h1>Состояние компонента</h1>
         <Counter initialValue={10} />
