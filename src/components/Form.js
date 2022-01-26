@@ -122,7 +122,10 @@ class Form extends Component {
           Согласен с условием
         </label>
         <br />
-        <button type="submit">Отправить</button>
+        {/* disabled - если не выбран, кнопка не активна */}
+        <button type="submit" disabled={!this.state.licence}>
+          Отправить
+        </button>
       </form>
     );
   }

@@ -1,3 +1,5 @@
+//устанавливаем npm i classnames
+import classNames from 'classnames';
 
 import React, {Component} from 'react';
 import './ColorPicker.css';
@@ -17,13 +19,18 @@ this.setState({activeOptionsIdx: index})
     
     // 2) выделяем выбранную кнопку
     makeOptionClassName = (index) => {
-        const optionClasses = ['ColorPicker__option'];     //базовый класс
+        // const optionClasses = ['ColorPicker__option'];     //базовый класс
                
-          // если индекс равняется активному индексу, то добавляется класс
-             if (index === this.state.activeOptionsIdx) {
-                optionClasses.push('ColorPicker__option--active')
-        }
-        return optionClasses.join(' ')
+        //   // если индекс равняется активному индексу, то добавляется класс
+        //      if (index === this.state.activeOptionsIdx) {
+        //         optionClasses.push('ColorPicker__option--active')
+        // }
+        // return optionClasses.join(' ')
+
+    //используя classNames(npm i classnames) можем заменить все это выражение на следующее (в начале передаем базовые класы (через запятую), потом {динамические классы(те которые зависят от условия)})
+    return classNames('ColorPicker__option', {
+    'ColorPicker__option--active': index === this.state.activeOptionsIdx,     //если это будет true класс добавится
+})
     }
     
     //1,2)
