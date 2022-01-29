@@ -5,17 +5,19 @@ class Form extends Component {
     name: '', //что сдесь запишем то и будет в инпуте на странице
     tag: '',
     experience: 'junior', //для радиокнопок, будет указано при загрузке первый раз
-    licence: false,
+    licence: false, //для чекбокса
   };
 
   // 4.2) метод который обновит состояние инпут
   // handleNameChange = event => {
   // console.log(event);
   // console.log(event.currentTarget.value);
+
   //обновляем state
   // this.setState({name: event.currentTarget.value})
 
   // }
+
   // handleTagChange = event => {
   //   this.setState({tag: event.currentTarget.value})
   // }
