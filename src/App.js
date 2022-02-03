@@ -9,7 +9,13 @@ import TodoList from './components/TodoList';
 import TodoEditor from './components/TodoEditor/TodoEditor';
 import initialTodos from './todos.json';
 import Form from './components/Form';
-import Filter from './components/Filter/Filter';
+import Filter from './components/Filter/Filter'; //фильтр для todo
+import Modal from './components/Modal'; // 7) модальное окно
+import Clock from './components/Clock'; // 8) clock
+// import Tabs from './components/Tabs';
+// import tabs from './tabs.json';
+import IconButton from './components/IconButton';
+import { ReactComponent as AddIcon } from './icons/add.svg'; //правильно импортируем иконки как компоненты
 
 // initialTodos
 //  [
@@ -32,16 +38,54 @@ const colorPickerOptions = [
 // 4.1) добавляем для form (input) name, tag  - ПЕРЕНЕСЛИ в отдел.файл
 class App extends Component {
   state = {
-    todos: initialTodos,
+    // todos: initialTodos,
+    todos: [],
     filter: '',
     // name:'',            //что сдесь запишем то и будет в инпуте на странице
     // tag: '',
+    showModal: false,
+  };
+
+  // 6) метод жизненого цикла Монтирование
+  //в localStorage сохраним изначальное todos
+  componentDidMount() {
+    // console.log('App componentDidMount');
+
+    const todos = localStorage.getItem('todos'); //это получается строка
+    const parsedTodos = JSON.parse(todos); // преведем в масив, и уже это масив записать в начальное значение setState
+    if (parsedTodos) {
+      this.setState({ todos: parsedTodos });
+    }
+  }
+  // 6) метод жизненого цикла Обновление
+  componentDidUpdate(prevProps, prevState) {
+    // console.log('App componentDidUpdate');
+    // console.log(prevState);
+    // console.log(this.state);
+
+    const nextTodos = this.state.todos;
+    const prevTodos = prevState.todos;
+    //(в LocalStorage ПРИ КАЖДОМ ОБНОВЛЕНИЕ презаписывается todos)
+    //если при обновление компонента this.state.todo не = prevState.todos (сравниваем, что было до оновления с тем, что после обновления)
+    //сравнение масивов по ссылке
+    if (nextTodos !== prevTodos) {
+      console.log('Обновилось поле todos');
+      //сохраняем текущую todo в LocalStorage
+      localStorage.setItem('todos', JSON.stringify(this.state.todos));
+    }
+  }
+
+  // 7) метод скрыть/показать модалку. state деструктуризируем в {showModal}
+  toggleModal = () => {
+    this.setState(({ showModal }) => ({
+      showModal: !showModal, //если true то будет false, если false то true
+    }));
   };
 
   //получаем данные из TodoEditor при сабмите ее формы, для этого
   //предадим как проп для формы(в App) и TodoEditor (в handleSubmit) сделаем вызов this.props.onSubmit(this.state.message )-кидаем в него
   addTodo = text => {
-    console.log('text:', text);
+    // console.log('text:', text);
     const todo = {
       id: shortid.generate(),
       text,
@@ -51,6 +95,10 @@ class App extends Component {
     this.setState(prevState => ({
       todos: [todo, ...prevState.todos],
     }));
+
+    //запихнули поле для добавления тудушек в модалку
+    //вызовем метод для закрытия модалки после добавления задания
+    this.toggleModal();
   };
 
   // 3) так как стейт находится в Арр, то МЕТОД ПО УДАЛЕНИЮ одной li прописываем тут же
@@ -63,7 +111,7 @@ class App extends Component {
   //обновление(будет тоблить свойства в масиве обьекта)
   //получаем идентификатор который хотим найти
   toggleCompleted = todoId => {
-    console.log('todoId', todoId);
+    // console.log('todoId', todoId);
 
     // this.setState(prevState => ({
     //   todos: prevState.todos.map(todo => {
@@ -93,7 +141,7 @@ class App extends Component {
 
   // 4.6) получаем доступ в App к form на момент сабмита(через пропсы, значение state, перекинем name и tag)
   formSubmitHandler = data => {
-    console.log(data);
+    // console.log(data);
   };
 
   changeFilter = event => {
@@ -112,7 +160,7 @@ class App extends Component {
   };
 
   render() {
-    const { todos, filter } = this.state;
+    const { todos, filter, showModal } = this.state;
 
     const totalTodoCount = todos.length;
     //высчитываем сколько выполненных
@@ -146,29 +194,51 @@ class App extends Component {
           </label>
           <button type='submit'>Отправить</button>
         </form> */}
-
         {/* 4/6) сдесь onSubmit это название пропса */}
         <Form onSubmit={this.formSubmitHandler} />
-
         <h1>Состояние компонента</h1>
         <Counter initialValue={10} />
         <Dropdown />
         <ColorPicker options={colorPickerOptions} />
+
         <h2>------------------ Todo --------------------------------</h2>
 
-        <TodoEditor onSubmit={this.addTodo} />
+        {/* иконка идет как children; передаем пропсом aria-label атрибут доступности */}
+        <IconButton onClick={this.toggleModal} aria-label="Добавить todo">
+          <AddIcon width="40" height="40" fill="white" />
+        </IconButton>
+
         <div>
-          <p>Общее количество: {totalTodoCount}</p>
+          <p>Всего заметок: {totalTodoCount}</p>
           <p>Выполненно: {completedTodosCount}</p>
         </div>
-
+        {/* <TodoEditor onSubmit={this.addTodo} /> */}
         <Filter value={filter} onChange={this.changeFilter} />
-
         <TodoList
           todos={visibleTodos}
           onDeleteTodo={this.deleteTodo}
           onToggleCompleted={this.toggleCompleted}
         />
+        {/* --------------------------------------------------- */}
+
+        {/* Модальное окно */}
+        {/* 7)  если showModal true, рендерится модалка */}
+        {/* следить за z-index, что бы было поверх других компонентов */}
+        {/* Но лучше использовать порталы:для этого в папке pablic, в файле index.html рядом с div root, добавляем div для модалки*/}
+        <button type="button" onClick={this.toggleModal}>
+          Открыть модалку
+        </button>
+        {showModal && (
+          <Modal onClose={this.toggleModal}>
+            <TodoEditor onSubmit={this.addTodo} />
+            <button type="button" onClick={this.toggleModal}>
+              Close
+            </button>
+          </Modal>
+        )}
+
+        <Clock />
+        {/* <Tabs items={tabs} /> */}
       </>
     );
   }
