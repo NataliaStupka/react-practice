@@ -56,4 +56,4 @@
 npm i -D --save-exact mini-css-extract-plugin@2.4.5 
 
 
-9) установлен npm install react-icons --save (иконки)
+9) npm install react-icons --save (иконки)
