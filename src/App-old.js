@@ -36,7 +36,7 @@ const colorPickerOptions = [
 // 2) Стало
 //делаем общий класс необходимый для компонентов App
 // 4.1) добавляем для form (input) name, tag  - ПЕРЕНЕСЛИ в отдел.файл
-class App extends Component {
+class AppOld extends Component {
   state = {
     // todos: initialTodos,
     todos: [],
@@ -257,4 +257,4 @@ class App extends Component {
 //   );
 // }
 
-export default App;
+export default AppOld;

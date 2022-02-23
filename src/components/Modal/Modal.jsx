@@ -4,7 +4,7 @@ import React, { Component } from 'react';
 import { createPortal } from 'react-dom'; //метод из react дома, для модального окна
 import './Modal.css';
 
-//для мщдального окна
+//для модального окна
 const modalRoot = document.querySelector('#modal-root');
 
 export default class Modal extends Component {
